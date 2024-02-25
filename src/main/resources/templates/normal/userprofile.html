@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/base::layout(~{::section})">
+
+<head>
+	<meta charset="UTF-8" />
+	<title th:text="${title}">
+		</titleth>
+</head>
+
+<body>
+	<section>
+		<div class="card mx-5">
+			<div class="card-body">
+				<div class="container text-center">
+					<img style="width:200px; height:200px" class="profileimg" th:src="@{'/img/profile.png'}"
+						alt="profile" />
+					<h4 class="my-3"><span th:text="${user.name}"></span></h4>
+
+					<table class="table table-striped-columns">
+
+						<tbody>
+							<tr>
+								<th scope="col">Id</th>
+								<th scope="row" th:text="${user.id}"></th>
+							</tr>
+
+							<tr>
+								<th scope="col">Email</th>
+								<td th:text="${user.email}"></td>
+							</tr>
+
+							<tr>
+								<th scope="col">Role</th>
+								<td th:text="${user.role}"></td>
+							</tr>
+							
+							<tr>
+								<th scope="col">Account active</th>
+								<td th:text="${user.enabled}"></td>
+							</tr>
+
+							<tr>
+								<th scope="col">About You</th>
+								<td th:text="${user.about}"></td>
+							</tr>
+
+						</tbody>
+					</table>
+
+					<form style="border: none; display: inline;" th:action="@{'/user/update/'+${user.id}}"
+						method="post">
+						<button class="btn btn-info"> <i class="fa-solid fa-pencil"></i></button>
+					</form>
+					<button class="btn btn-danger" th:onclick="|deleteuser(${user.id})|">
+						<i class="fa fa-trash-can"></i>
+					</button>
+
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/base::layout(~{::section})">
+
+<head>
+	<meta charset="UTF-8" />
+	<title th:text="${title}"></title>
+</head>
+
+<body>
+	<section>
+		<div class="card mx-5">
+			<div class="card-body">
+				<h2 class="text-center">Your Contacts</h2>
+				<table class="table table-striped-columns">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Name</th>
+							<th>Email</th>
+							<th>Phone</th>
+							<th>Work</th>
+							<th class="text-center" colspan="2">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<tr th:each="c: ${contacts}">
+							<td scope th:text="${c.cid}"></td>
+
+							<td>
+								<img class="profileimg" th:src="@{'/img/' + ${c.image}}" alt="profile" />
+								<span th:text="${c.name}"></span>
+							</td>
+
+							<td>
+								<a style="text-decoration: none; color: black;"
+									th:href="@{'/user/show-contacts/contact/' + ${c.cid}}">
+									<span th:text="${c.email}"></span>
+								</a>
+							</td>
+							<td th:text="${c.phone}"></td>
+							<td th:text="${c.work}"></td>
+							<td>
+								<form th:action="@{'/user/update/' + ${c.cid}}" method="post">
+									<button style="border: none; background-color: white;"><i class="fa-solid fa-pencil"></i></button>
+								</form>
+							</td>
+							<td>
+								<a style="cursor: pointer;" th:onclick="|deleteContact(${c.cid})|">
+									<i class="fa fa-trash-can"></i>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<nav aria-label="Page navigation example">
+					<ul class="pagination justify-content-center">
+						<li class="page-item">
+							<a th:if="${currentPage != 0 }" th:href="@{'/user/show-contacts/' + ${currentPage-1}}"
+								class="page-link">Previous</a>
+						</li>
+						<li th:classappend="${currentPage == i-1 ? 'active': ''}"
+							th:each="i : ${#numbers.sequence(1,totalPages)}" class="page-item"><a class="page-link"
+								th:href="@{'/user/show-contacts/' + ${i-1}}"><span th:text="${i}"></span></a>
+						</li>
+						<li th:if="${currentPage+1 != totalPages}"><a class="page-link"
+								th:href="@{'/user/show-contacts/' + ${currentPage+1}}">Next</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</section>
+</body>
+
+</html>

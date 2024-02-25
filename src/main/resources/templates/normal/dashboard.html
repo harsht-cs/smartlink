@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{normal/base::layout(~{::section})}">
+
+<head>
+	<meta charset="UTF-8" />
+	<title th:text="${title}"></title>
+</head>
+
+<body>
+	<section>
+		<div class="card mx-5">
+			<div class="card-body">
+				<div class="container text-center">
+					<img th:src="@{/img/phonebook.png}" alt="phonebook" />
+					<h4 style="margin-top: 20px;">Hi, <span th:text="${user.name}"></span></h4>
+					<a th:href="@{/user/addcontact}">
+						<img style="width: 100px; height: 100px;" th:src="@{/img/arrow.png}" alt="arrow" />
+					</a>
+					<h5 style="color: #19A7CE;">Click to add contacts</h5>
+
+				</div>
+
+
+			</div>
+		</div>
+	</section>
+</body>
+
+</html>

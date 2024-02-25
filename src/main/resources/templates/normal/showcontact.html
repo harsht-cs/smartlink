@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/base::layout(~{::section})">
+
+<head>
+	<meta charset="UTF-8" />
+	<title th:text="${title}"></title>
+</head>
+
+<body>
+	<section>
+		<div class="card mx-5">
+			<div class="card-body" th:if="${contact}">
+				<div class="container text-center">
+					<img style="width:200px; height:200px" class="profileimg" th:src="@{'/img/' + ${contact.image} }"
+						alt="profile" />
+					<h4 class="my-3"><span th:text="${contact.name}"></span> <span
+							th:text="${contact.secondName}"></span></h4>
+
+					<table class="table table-striped-columns">
+						<thead>
+							<tr>
+								<th scope="col">Id</th>
+								<th scope="col">Email</th>
+								<th scope="col">Phone</th>
+								<th scope="col">Work</th>
+								<th scope="col">Desc</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th scope="row" th:text="${contact.cid}"></th>
+								<td th:text="${contact.email}"></td>
+								<td th:text="${contact.phone}"></td>
+								<td th:text="${contact.work}"></td>
+								<td th:text="${contact.description}"></td>
+							</tr>
+						</tbody>
+					</table>
+
+					<form style="border: none; display: inline;" th:action="@{'/user/update/'+${contact.cid}}" method="post">
+						<button class="btn btn-info"> <i class="fa-solid fa-pencil"></i></button>
+					</form>
+					<button class="btn btn-danger" th:onclick="|deleteContact(${contact.cid})|">
+						<i class="fa fa-trash-can"></i>
+					</button>
+
+				</div>
+			</div>
+			<div class="card-body" th:unless="${contact}">
+				<div class="container text-center">
+					<h4>No contacts available <i class="fa-solid fa-circle-exclamation"></i></h4>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+
+</html>

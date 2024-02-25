@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{normal/base::layout(~{::section})}">
+
+<head>
+	<meta charset="utf-8">
+	<title>Add Contact</title>
+</head>
+
+<body>
+
+	<section>
+
+		<div class="card mx-5">
+
+			<div class="card-body">
+
+				<h1 class="text-center">Add Contacts</h1>
+
+				<div class="container-fluid mt-2">
+
+					<div class="row">
+
+						<div class="col-md-8 offset-md-2">
+
+							<form th:action="@{/user/process-contact}" method="POST" th:object="${contact}"
+								enctype="multipart/form-data" class="mt-2">
+
+								<!--First Name-->
+
+								<div class="input-group">
+
+									<div class="input-group-prepend">
+
+										<div class="input-group-text">
+											<i class="fa fa-plus"></i>
+										</div>
+
+									</div>
+
+									<input name="name" type="text" th:value="${contact.name}" class="form-control"
+										id="autoSizingInputGroup" placeholder="Enter Name"
+										th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : '' }">
+
+									<div th:each="e: ${#fields.errors('name')}" class="invalid-feedback">
+										<p th:text="${e}"></p>
+									</div>
+
+								</div>
+
+								<!--Second Name-->
+
+								<div class="input-group mt-3">
+
+									<div class="input-group-prepend">
+
+										<div class="input-group-text">
+											<i class="fa-solid fa-user"></i>
+										</div>
+
+									</div>
+
+									<input name="secondName" type="text" th:value="${contact.secondName}"
+										class="form-control" id="autoSizingInputGroup" placeholder="Enter SecondName"
+										th:classappend="${#fields.hasErrors('secondName') ? 'is-invalid' : '' }">
+
+									<div th:each="e: ${#fields.errors('secondName')}" class="invalid-feedback">
+										<p th:text="${e}"></p>
+									</div>
+
+								</div>
+
+								<!--Phone-->
+
+								<div class="input-group mt-3">
+
+									<div class="input-group-prepend">
+
+										<div class="input-group-text">
+											<i class="fa-solid fa-phone"></i>
+										</div>
+
+									</div>
+
+									<input name="phone" type="number" th:value="${contact.phone}" class="form-control"
+										id="autoSizingInputGroup" placeholder="Enter Phone No."
+										th:classappend="${#fields.hasErrors('phone') ? 'is-invalid' : '' }">
+
+									<div th:each="e: ${#fields.errors('phone')}" th:text="${e}"
+										class="invalid-feedback">
+									</div>
+
+								</div>
+
+								<!--Email-->
+
+								<div class="input-group mt-3">
+
+									<div class="input-group-prepend">
+
+										<div class="input-group-text">
+											<i class="fa-solid fa-envelope"></i>
+										</div>
+
+									</div>
+
+									<input name="email" type="email" th:value="${contact.email}" class="form-control"
+										id="autoSizingInputGroup" placeholder="Enter Email"
+										th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : '' }">
+
+									<div th:each="e: ${#fields.errors('email')}" class="invalid-feedback">
+										<p th:text="${e}"></p>
+									</div>
+
+								</div>
+
+								<!--Work-->
+
+								<div class="input-group mt-3">
+
+									<div class="input-group-prepend">
+
+										<div class="input-group-text">
+											<i class="fa-solid fa-briefcase"></i>
+										</div>
+
+									</div>
+
+									<input name="work" type="text" th:value="${contact.work}" class="form-control"
+										id="autoSizingInputGroup" placeholder="Enter Work">
+
+								</div>
+
+								<!--Image-->
+
+								<div class="input-group mt-3">
+
+									<div class="input-group-prepend">
+
+										<div class="input-group-text">
+											<i class="fa-solid fa-image"></i>
+										</div>
+
+									</div>
+
+									<input name="profileImage" th:value="${contact.image}" type="file"
+										class="form-control" id="autoSizingInputGroup" placeholder="Add Image">
+
+								</div>
+
+
+								<!--Description-->
+
+								<div class="input-group mt-3">
+									<textarea style="width: 100%;" id="mytextarea" name="description" rows="10"
+										th:value="${contact.description}" class="form-control"
+										placeholder="Enter Description"></textarea>
+								</div>
+
+								<!--Save Button-->
+
+								<div class="container mt-2 text-center">
+									<button type="submit" class=" btn btn-outline-primary">Save</button>
+								</div>
+
+
+
+							</form>
+
+						</div>
+
+					</div>
+
+				</div>
+
+
+
+			</div>
+
+		</div>
+
+
+		<script src="https://cdn.tiny.cloud/1/8vjmpq0zj24fmh2hcv6vear13zqkra5sx7xra4ue17u2cee6/tinymce/6/tinymce.min.js"
+			referrerpolicy="origin"></script>
+
+
+		<script>
+			tinymce.init({
+				selector: '#mytextarea',
+				plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+				toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+				tinycomments_mode: 'embedded',
+				tinycomments_author: 'Author name',
+				toolbar_sticky: true,
+				icons: 'thin',
+				forced_root_block : 'p',
+				mergetags_list: [
+					{value: 'First.Name', title: 'First Name'},
+					{value: 'Email', title: 'Email'},
+				],
+				ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+			});
+			tinymce.activeEditor.getContent({format: 'text'});
+		</script>
+
+	</section>
+</body>
+
+</html>
